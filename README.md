@@ -15,4 +15,4 @@ The way this algorithm works is as follows:
 
 ## How to run the program
 
-To run the program type `node fileName n`, where `fileName` is a **JSON** file and `n` the number of peaks to be found
+To run the program type **`node fileName n`**, where **`fileName`** is a **JSON** file and **`n`** the number of peaks to be found
