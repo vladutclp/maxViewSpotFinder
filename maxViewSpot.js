@@ -14,6 +14,7 @@ const [fileName, numberOfPeaksToFind] = [...args];
 * and the peaks array
 */
 let maxValue = Number.NEGATIVE_INFINITY;
+let lastMaxValue = Number.NEGATIVE_INFINITY;
 let maxID = -1;
 let maxIndex = -1;
 let numberOfMaxValues = 0;
@@ -44,42 +45,20 @@ function readDataFromJson(){
   }
 }
 /*
-* Description: Function used to find an element neighbour if it exists
-* Parameters : int, int, array, int
+* Description: Function used to find all neighbours of an element(elements that have a common node)
+* Parameters : int, int, int, array, int
 * Return type: object or undefined
 */
-function findNeighbourNode(node1, node2, elements, id){
-  const foundNeighbour = elements.find(element => {
-    return (((element.nodes[0] == node1 && element.nodes[1] == node2) ||
-             (element.nodes[0] == node1 && element.nodes[2] == node2) ||
-             (element.nodes[1] == node1 && element.nodes[2] == node2) ||
-             (element.nodes[0] == node2 && element.nodes[1] == node1) ||
-             (element.nodes[0] == node2 && element.nodes[2] == node1) ||
-             (element.nodes[1] == node2 && element.nodes[2] == node1)) && element.id != id);
-    });
+function findAllNeighbours(node1, node2, node3, elements, id){
+  const allNeighbours = elements.filter(element => {
+    return (((element.nodes[0] == node1) || (element.nodes[1] == node1) || (element.nodes[2] == node1)  ||
+             (element.nodes[0] == node2) || (element.nodes[1] == node2) || (element.nodes[2] == node2)  ||
+             (element.nodes[0] == node3) || (element.nodes[1] == node3) || (element.nodes[2] == node3)) && element.id != id);
+  });
     
-  return foundNeighbour;
+  return allNeighbours;
 }
 
-/*
-* Description: Function used to find the value of a specific element
-* Parameters : object
-* Return type: int
-*/
-function getElementValue(element){
-  let elementID = -1;
-  let elementValue = Number.NEGATIVE_INFINITY;
-
-  if(typeof(element) !== 'undefined'){
-    elementID = element.id;
-   }
-
-  if(elementID != -1){
-    elementValue = values[elementID].value;
-  }
-
-  return elementValue;
-}
 
 /*
 * Description: Function used to find all the peaks
@@ -103,22 +82,25 @@ function getPeakElements(numberOfPeaksToFind){
     
     // Get maximum value element
     let foundElement = elements[maxID];
-    // Get element nodes
+    // Get maximum element nodes
     const [node1, node2, node3] = [...foundElement.nodes];
   
     // Get all neighbours
-    const firstNeighbour  = findNeighbourNode(node1, node2, elements, maxID);
-    const secondNeighbour = findNeighbourNode(node1, node3, elements, maxID);
-    const thirdNeighbour  = findNeighbourNode(node2, node3, elements, maxID);
+    const allNeighbours  = findAllNeighbours(node1, node2, node3,elements, maxID);
+
+    // Returns undefined if there are no neighbours with a greater value than the current maximum value
+    const greaterThanCurrentMax = allNeighbours.find(element =>{
+      return (values[element.id].value > maxValue);
+    });
     
-    // Get neighbour elements values
-    const firstNeighbourElementValue  = getElementValue(firstNeighbour);
-    const secondNeighbourElementValue = getElementValue(secondNeighbour);
-    const thirdNeighbourElementValue  = getElementValue(thirdNeighbour);
-   
-    if(maxValue > firstNeighbourElementValue && maxValue > secondNeighbourElementValue && maxValue > thirdNeighbourElementValue ){
-        peaks.push({element_id: maxID, value: maxValue});
-        values[maxIndex].wasMax = true;
+    // Always keep a record on the last maximum value so we avoid plateau values
+    if(peaks.length > 0){
+      lastMaxValue = peaks[peaks.length - 1];
+    }
+    if(greaterThanCurrentMax === undefined && maxValue !== lastMaxValue.value){
+      peaks.push({element_id: maxID, value: maxValue});
+      values[maxIndex].wasMax = true;
+      lastMaxValue = maxValue;
     }
       
     values[maxIndex].wasMax = true;
