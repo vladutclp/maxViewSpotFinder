@@ -72,7 +72,7 @@ function getPeakElements(numberOfPeaksToFind){
 
   while(peaks.length < numberOfPeaksToFind && numberOfMaxValues < elements.length - 1){
     // Find current maximum value
-    for(let index = 1; index < values.length; index++){
+    for(let index = 0; index < values.length; index++){
       if(values[index].value > maxValue && !values[index].wasMax){
         maxValue = values[index].value;
         maxID = values[index].element_id;
@@ -84,7 +84,13 @@ function getPeakElements(numberOfPeaksToFind){
     let foundElement = elements[maxID];
     // Get maximum element nodes
     const [node1, node2, node3] = [...foundElement.nodes];
-  
+    
+    // If the current maximum value is below 0, break the execution since
+    // the peaks have to be greater than 0, assuming this is a walking tour as mentioned
+    // in the assignment description
+    if(maxValue < 0)
+      break;
+
     // Get all neighbours
     const allNeighbours  = findAllNeighbours(node1, node2, node3,elements, maxID);
 
