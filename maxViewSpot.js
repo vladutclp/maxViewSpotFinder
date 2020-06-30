@@ -67,7 +67,7 @@ function findAllNeighbours(node1, node2, node3, elements, id){
 */
 function getPeakElements(numberOfPeaksToFind){
   
-  if(parseInt(numberOfPeaksToFind) < 0 || isNaN(parseInt(numberOfPeaksToFind)))
+  if(parseInt(numberOfPeaksToFind) <= 0 || isNaN(parseInt(numberOfPeaksToFind)))
     throw new Error("Second argument has to be a positive integer");
 
   while(peaks.length < numberOfPeaksToFind && numberOfMaxValues < elements.length - 1){
