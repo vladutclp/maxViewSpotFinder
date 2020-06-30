@@ -80,17 +80,18 @@ function getPeakElements(numberOfPeaksToFind){
       }
     };
     
-    // Get maximum value element
-    let foundElement = elements[maxID];
-    // Get maximum element nodes
-    const [node1, node2, node3] = [...foundElement.nodes];
-    
+
     // If the current maximum value is below 0, break the execution since
     // the peaks have to be greater than 0, assuming this is a walking tour as mentioned
     // in the assignment description
     if(maxValue < 0)
       break;
 
+    // Get maximum value element
+    let foundElement = elements[maxID];
+    // Get maximum element nodes
+    const [node1, node2, node3] = [...foundElement.nodes];
+    
     // Get all neighbours
     const allNeighbours  = findAllNeighbours(node1, node2, node3,elements, maxID);
 
