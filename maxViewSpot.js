@@ -10,7 +10,7 @@ const [fileName, numberOfPeaksToFind] = [...args];
 
 /*
 * Initialization of maximum value, maximum value ID,
-* maximum value index in the array, number of maximum values,
+* maximum value index in the array, number of maximum values, last maximum value
 * and the peaks array
 */
 let maxValue = Number.NEGATIVE_INFINITY;
