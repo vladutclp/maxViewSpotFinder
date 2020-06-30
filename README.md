@@ -2,7 +2,7 @@
 
 ## Description:
 
-**This algorithm find all peak elements in a mesh like map and outputs the first `n` peaks in descending order.**
+**This algorithm finds all peak elements in a mesh like map and outputs the first `n` peaks in descending order on the console.**
 
 The way this algorithm works is as follows:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.Find the current maximum element and the coresponding nodes<br/>
