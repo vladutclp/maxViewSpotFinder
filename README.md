@@ -10,8 +10,8 @@ The way this algorithm works is as follows:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.For each neighbour, check if one of them has a greater value that our current maximum<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.If there are no neighbours with value greater than current maximum, then our current maximum is a peak<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.Repeat until you find `n` peaks, where `n` is a command line argument corresponding to the number of peaks to be found or until all the peak have been found<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.When the current maximum is a negative number, the program will break since we are only looking for positive value peaks(Assuming this is a walking tour as mentioned in the assignment description)<br/>
 
-**Assuming we have negative values for height(depth), e.g *Holland, Denmark*, negativea peaks are taken in consideration.**
 
 ## How to run the program
 
